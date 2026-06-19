@@ -22,8 +22,8 @@
       --bg-secondary: #111111;
       --bg-card: #1A1A1A;
       --bg-card-hover: #1F1F1F;
-      --accent: #f52a23;
-      --accent-hover: #e01710;
+      --accent: #F5A623;
+      --accent-hover: #E09510;
       --accent-dim: rgba(245,166,35,0.08);
       --text-primary: #FFFFFF;
       --text-muted: #888888;
@@ -1655,13 +1655,82 @@
       opacity: 1;
       transform: translateY(0);
     }
+    /* ── Petal/Particle System ── */
+    .petal-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+    }
+    .petal {
+      position: absolute;
+      top: -5%;
+      will-change: transform, opacity;
+    }
+    .petal svg { display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+
+    /* Hero: classic drifting fall */
+    @keyframes petal-fall-drift {
+      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      8%   { opacity: 0.85; }
+      50%  { transform: translate(40px, 50vh) rotate(180deg); }
+      92%  { opacity: 0.85; }
+      100% { transform: translate(-20px, 108vh) rotate(360deg); opacity: 0; }
+    }
+    /* About: slow upward float (like embers / ideas rising) */
+    @keyframes petal-float-up {
+      0%   { transform: translate(0, 10vh) rotate(0deg) scale(0.8); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.6; }
+      100% { transform: translate(30px, -100vh) rotate(140deg) scale(1.05); opacity: 0; }
+    }
+    /* Experience: fast diagonal energetic fall */
+    @keyframes petal-fall-fast {
+      0%   { transform: translate(0,0) rotate(0deg); opacity: 0; }
+      6%   { opacity: 0.9; }
+      94%  { opacity: 0.7; }
+      100% { transform: translate(-120px, 105vh) rotate(420deg); opacity: 0; }
+    }
+    /* Education: gentle circular swirl */
+    @keyframes petal-swirl {
+      0%   { transform: translate(0,0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.75; }
+      25%  { transform: translate(35px, 25vh) rotate(90deg); }
+      50%  { transform: translate(0px, 50vh) rotate(180deg); }
+      75%  { transform: translate(-35px, 75vh) rotate(270deg); }
+      90%  { opacity: 0.75; }
+      100% { transform: translate(0px, 102vh) rotate(360deg); opacity: 0; }
+    }
+    /* Skills: glyph + petal mix, slight jitter */
+    @keyframes petal-glyph-fall {
+      0%   { transform: translate(0,0) rotate(0deg); opacity: 0; }
+      8%   { opacity: 0.8; }
+      30%  { transform: translate(15px, 30vh) rotate(60deg); }
+      60%  { transform: translate(-15px, 62vh) rotate(120deg); }
+      92%  { opacity: 0.8; }
+      100% { transform: translate(10px, 105vh) rotate(220deg); opacity: 0; }
+    }
+    /* Projects: scatter/burst outward, settle down */
+    @keyframes petal-scatter {
+      0%   { transform: translate(0,0) scale(0.3) rotate(0deg); opacity: 0; }
+      15%  { opacity: 0.9; transform: translate(var(--scatter-x, 60px), 8vh) scale(1) rotate(80deg); }
+      100% { transform: translate(calc(var(--scatter-x, 60px) * 1.4), 100vh) scale(0.9) rotate(300deg); opacity: 0; }
+    }
+    /* Testimonials: minimal soft float */
+    @keyframes petal-soft-float {
+      0%   { transform: translate(0,0) rotate(0deg); opacity: 0; }
+      15%  { opacity: 0.5; }
+      85%  { opacity: 0.5; }
+      100% { transform: translate(10px, 100vh) rotate(140deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
-<!-- Vercel Web Analytics -->
-<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-<script defer src="/<unique-path>/script.js"></script>
   <div id="scroll-progress" aria-hidden="true"></div>
   <div id="custom-cursor" aria-hidden="true"></div>
 
@@ -1685,6 +1754,7 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="home">
+    <div class="petal-layer" id="petals-hero"></div>
     <span class="section-bg-number">00</span>
     <div class="hero-container">
       <div class="hero-text fade-in">
@@ -1708,7 +1778,7 @@
         <div class="hero-ctas">
           <a href="#projects" class="btn-primary">view projects →</a>
           <a href="#contact" class="btn-secondary">contact me</a>
-          <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="btn-secondary">github ↗</a>
+          <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="btn-secondary">github ↗</a>
         </div>
       </div>
       <div class="availability-card fade-in">
@@ -1807,6 +1877,7 @@
 
   <!-- ═══ 01 ABOUT ═══ -->
   <section class="section" id="about">
+    <div class="petal-layer" id="petals-about"></div>
     <span class="section-bg-number">01</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -1881,6 +1952,7 @@
 
   <!-- ═══ 02 EXPERIENCE ═══ -->
   <section class="section" id="experience" style="background: var(--bg-secondary);">
+    <div class="petal-layer" id="petals-experience"></div>
     <span class="section-bg-number">02</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -1914,6 +1986,7 @@
 
   <!-- ═══ 03 EDUCATION ═══ -->
   <section class="section" id="education">
+    <div class="petal-layer" id="petals-education"></div>
     <span class="section-bg-number">03</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -2017,6 +2090,7 @@
 
   <!-- ═══ 04 SKILLS ═══ -->
   <section class="section" id="skills" style="background: var(--bg-secondary);">
+    <div class="petal-layer" id="petals-skills"></div>
     <span class="section-bg-number">04</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -2175,6 +2249,7 @@
 
   <!-- ═══ 06 PROJECTS ═══ -->
   <section class="section" id="projects" style="background: var(--bg-secondary);">
+    <div class="petal-layer" id="petals-projects"></div>
     <span class="section-bg-number">06</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -2216,7 +2291,7 @@
             <span class="tech-tag">Google Colab (T4)</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
@@ -2254,7 +2329,7 @@
             <span class="tech-tag">Secure Elite 440</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
@@ -2289,7 +2364,7 @@
             <span class="tech-tag">Haar Cascade</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
@@ -2324,7 +2399,7 @@
             <span class="tech-tag">LBPH Algorithm</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
@@ -2359,7 +2434,7 @@
             <span class="tech-tag">Ultralytics</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
@@ -2394,19 +2469,20 @@
             <span class="tech-tag">Arduino</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="project-link">source code ↗</a>
+            <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="project-link">source code ↗</a>
           </div>
         </div>
 
       </div>
       <div class="view-all-cta fade-in">
-        <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="btn-secondary">view all on github →</a>
+        <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="btn-secondary">view all on github →</a>
       </div>
     </div>
   </section>
 
   <!-- ═══ TESTIMONIALS ═══ -->
   <section class="section" id="testimonials">
+    <div class="petal-layer" id="petals-testimonials"></div>
     <span class="section-bg-number">07</span>
     <div class="section-inner">
       <div class="section-header fade-in">
@@ -2569,7 +2645,7 @@
           <div style="margin-top: 1.5rem;">
             <div style="font-family: var(--mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 0.6rem;">// follow me</div>
             <div class="footer-socials" style="display: flex; gap: 1rem;">
-              <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="footer-social">github</a>
+              <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="footer-social">github</a>
               <a href="https://www.linkedin.com/in/ratnesh-singh-783660379/" target="_blank" rel="noopener" class="footer-social">linkedin</a>
               <a href="mailto:rs9313399@gmail.com" class="footer-social">email</a>
               <a href="https://wa.me/919039933197" class="footer-social">whatsapp</a>
@@ -2638,7 +2714,7 @@
     <div class="footer-bottom">
       <div class="footer-copy">© <span id="footer-year"></span> Ratnesh. all rights reserved. — built with ☕ &amp; too many stack overflow tabs</div>
       <div class="footer-socials">
-        <a href="https://github.com/rs9313399-dot" target="_blank" rel="noopener" class="footer-social">github</a>
+        <a href="https://github.com/rs9313399" target="_blank" rel="noopener" class="footer-social">github</a>
         <a href="https://www.linkedin.com/in/ratnesh-singh-783660379/" target="_blank" rel="noopener" class="footer-social">linkedin</a>
         <a href="mailto:rs9313399@gmail.com" class="footer-social">email</a>
       </div>
@@ -2783,6 +2859,109 @@
         }
       });
     });
+
+    // ── Cherry Blossom Petal System ──
+    (function() {
+      // SVG petal shapes - varied for visual interest
+      const petalShapes = [
+        // Classic 5-point blossom petal
+        `<svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0C10 2 12 4 8 8C4 4 6 2 8 0Z" fill="currentColor"/></svg>`,
+        // Rounder petal
+        `<svg width="14" height="14" viewBox="0 0 14 14"><ellipse cx="7" cy="7" rx="6" ry="4" fill="currentColor"/></svg>`,
+        // Small dot/glyph (for skills section mix)
+        `<svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="currentColor"/></svg>`,
+      ];
+
+      const glyphChars = ['0', '1', '{ }', '<>'];
+
+      // Color palette - red/orange brand range
+      const colors = ['#F5A623', '#E09510', '#FF6B4A', '#D9622B', '#F0832E'];
+
+      function randomBetween(min, max) { return Math.random() * (max - min) + min; }
+      function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // Config per section: animation name, density, size range, duration range, drift
+      const sectionConfigs = {
+        'petals-hero':         { anim: 'petal-fall-drift',  count: 14, size: [10,18], duration: [9,14],  delayMax: 10, color: true },
+        'petals-about':        { anim: 'petal-float-up',    count: 10, size: [8,14],  duration: [10,16], delayMax: 12, color: true },
+        'petals-experience':   { anim: 'petal-fall-fast',   count: 12, size: [9,15],  duration: [5,8],   delayMax: 8,  color: true },
+        'petals-education':    { anim: 'petal-swirl',       count: 10, size: [10,16], duration: [11,16], delayMax: 10, color: true },
+        'petals-skills':       { anim: 'petal-glyph-fall',  count: 14, size: [9,14],  duration: [8,13],  delayMax: 10, glyphMix: true },
+        'petals-projects':     { anim: 'petal-scatter',     count: 10, size: [10,16], duration: [6,10],  delayMax: 6,  color: true, scatter: true },
+        'petals-testimonials': { anim: 'petal-soft-float',  count: 6,  size: [8,12],  duration: [12,18], delayMax: 10, color: true },
+      };
+
+      function createPetal(config) {
+        const el = document.createElement('div');
+        el.className = 'petal';
+        const size = randomBetween(config.size[0], config.size[1]);
+        const left = randomBetween(0, 100);
+        const duration = randomBetween(config.duration[0], config.duration[1]);
+        const delay = randomBetween(0, config.delayMax);
+        const color = pick(colors);
+
+        el.style.left = left + '%';
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        el.style.color = color;
+        el.style.animation = `${config.anim} ${duration}s linear ${delay}s infinite`;
+
+        if (config.scatter) {
+          const scatterX = randomBetween(-80, 80);
+          el.style.setProperty('--scatter-x', scatterX + 'px');
+        }
+
+        if (config.glyphMix && Math.random() < 0.35) {
+          // occasional glyph instead of petal shape
+          el.textContent = pick(glyphChars);
+          el.style.fontFamily = 'var(--mono)';
+          el.style.fontSize = size + 'px';
+          el.style.fontWeight = '600';
+          el.style.opacity = '0.8';
+        } else {
+          el.innerHTML = pick(petalShapes);
+        }
+
+        return el;
+      }
+
+      function populateLayer(layerEl, config) {
+        if (layerEl.dataset.populated) return;
+        layerEl.dataset.populated = 'true';
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < config.count; i++) {
+          frag.appendChild(createPetal(config));
+        }
+        layerEl.appendChild(frag);
+      }
+
+      // Respect reduced-motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      // Use IntersectionObserver to only populate/animate visible sections (perf)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const layerEl = entry.target;
+          const config = sectionConfigs[layerEl.id];
+          if (!config) return;
+          if (entry.isIntersecting) {
+            populateLayer(layerEl, config);
+            layerEl.style.opacity = '1';
+          } else {
+            layerEl.style.opacity = '0';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      Object.keys(sectionConfigs).forEach(id => {
+        const layerEl = document.getElementById(id);
+        if (layerEl) {
+          layerEl.style.transition = 'opacity 0.6s ease';
+          observer.observe(layerEl);
+        }
+      });
+    })();
 
     // ── Contact Form AJAX Submit (Formspree) ──
     (function() {
